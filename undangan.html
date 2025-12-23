@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Undangan Pernikahan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+<style>
+:root { --gold:#c7a35a; }
+*{box-sizing:border-box;}
+
+html,body{
+  margin:0;
+  padding:0;
+  font-family:Poppins,sans-serif;
+  scroll-behavior:smooth;
+}
+body.lock{
+  overflow:hidden;
+  height:100vh;
+}
+
+/* ================= BUNGA GLOBAL ================= */
+.flower-frame{
+  position:fixed;
+  z-index:20;
+  pointer-events:none;
+}
+.flower-frame img{
+  width:260px;
+  height:260px;
+  opacity:.95;
+  animation:windFlower 12s ease-in-out infinite;
+}
+.flower-frame:nth-child(1) img{animation-delay:0s;}
+.flower-frame:nth-child(2) img{animation-delay:3s;}
+.flower-frame:nth-child(3) img{animation-delay:6s;}
+.flower-frame:nth-child(4) img{animation-delay:9s;}
+
+@keyframes windFlower{
+  0%{transform:translate(0,0) rotate(0);}
+  25%{transform:translate(25px,-20px) rotate(6deg);}
+  50%{transform:translate(-25px,25px) rotate(-6deg);}
+  75%{transform:translate(15px,-10px) rotate(4deg);}
+  100%{transform:translate(0,0) rotate(0);}
+}
+
+@media(max-width:768px){
+  .flower-frame img{width:180px;height:180px;}
+}
+
+/* ================= SECTION ================= */
+section{
+  min-height:100vh;
+  padding:80px 20px;
+  text-align:center;
+  color:#fff;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s ease;
+  position:relative;
+}
+.container{
+  max-width:360px;
+  width:100%;
+  text-align:center;
+  padding:20px;
+  margin: auto;
+}
+/* FOTO MELENGKUNG */
+.foto-lengkung{
+  border: 4px solid #c7a35a;
+  border-radius: 200px 200px 25px 25px;
+  overflow: hidden;
+}
+.foto-lengkung img{
+  width: 100%;
+  display: block;
+}
+
+/* FOTO LOVE - Bentuk hati */
+.foto-love{
+  border-radius: 100px solid #c7a35a;
+  overflow: hidden;
+  position: relative;
+}
+.foto-love img{
+  width: 100%;
+  display: block;
+  clip-path: polygon(50% 0%, 0% 25%, 0% 50%, 25% 75%, 50% 100%, 75% 75%, 100% 50%, 100% 25%);
+}
+
+/* teks */
+.teks{
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(255,255,255,.8);
+  border-radius: 15px;
+  font-size: 14.5;
+  line-height: 1.8;
+  color:#333;
+}
+.teks span{
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+
+
+section.show{opacity:1;transform:none;}
+section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.45);
+}
+section *{position:relative;z-index:1;}
+
+.title{
+  font-family:'Playfair Display';
+  font-size:32px;
+  margin-bottom:30px;
+}
+
+/* ================= COVER TERANG ================= */
+.cover{
+  height:100vh;
+  background:url('weeding2.jpg') center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+}
+.cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(242, 240, 240, 0.15); /* TERANG */
+  pointer-events:none;
+}
+.cover-content{
+  position:relative;
+  z-index:50;
+  animation:fade 1.5s;
+}
+.cover-content h2, .cover-content h1, .cover-content p {  /* ⬅️ TAMBAHAN WARNA PUTIH */
+  color: #fff !important;
+}
+.cover button{
+  margin-top:20px;
+  padding:14px 38px;
+  background:var(--gold);
+  border:none;
+  color:#fff;
+  font-size:16px;
+  border-radius:30px;
+  cursor:pointer;
+}
+
+/* ================= MUSIC ================= */
+.music{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:none;
+  background:var(--gold);
+  color:#fff;
+  font-size:20px;
+  z-index:99;
+  display:none;
+}
+.music.playing{background:#a08a4a;}
+
+/* ================= CONTENT ================= */
+.couple{
+  display:flex;
+  gap:40px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.person img{
+  width:180px;
+  border-radius:50%;
+  /* Tambahan untuk bentuk love pada slide ke-3 (section MEMPELAI) */
+  clip-path: none;
+}
+
+.countdown{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  margin-top: 30px;
+}
+.countdown div{
+  background:#fff;
+  color:#000;
+  padding:15px;
+  min-width:70px;
+  border-radius:10px;
+}
+
+/* ================= EVENT DETAILS (TAMBAHAN) ================= */
+.event-details {
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: #333;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.event-details p {
+  margin: 10px 0;
+}
+
+.event-details p:first-child {
+  font-weight: bold;
+  color: var(--gold);
+}
+
+/* ================= LOKASI (TAMBAHAN) ================= */
+.location-details {
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: #333;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.location-details p {
+  margin: 10px 0;
+}
+
+.location-details iframe {
+  width: 100%;
+  height: 200px;
+  border: 0;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+/* ================= TRANSFER CARD ================= */
+.transfer-card{
+  background: linear-gradient(135deg, #c7a35a, #e8d7a3);
+  color:#fff;
+  border-radius:20px;
+  padding:20px;
+  max-width:360px;
+  margin:20px auto 0;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  text-align:left;
+  position:relative;
+}
+
+.transfer-card .bank{
+  font-size:18px;
+  font-weight:600;
+  letter-spacing:1px;
+}
+
+.transfer-card .chip{
+  width:45px;
+  height:35px;
+  background:linear-gradient(135deg,#d9d9d9,#f5f5f5);
+  border-radius:6px;
+  margin:15px 0;
+}
+
+.transfer-card .number{
+  font-size:20px;
+  letter-spacing:3px;
+  margin:10px 0;
+}
+
+.transfer-card .name{
+  font-size:14px;
+  text-transform:uppercase;
+}
+
+.transfer-card .copy-btn{
+  margin-top:15px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#fff;
+  color:#c7a35a;
+  font-weight:600;
+  cursor:pointer;
+}
+
+/* ================= DOA PENGANTIN (TAMBAHAN) ================= */
+.doa-details {
+  margin-top: 20px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: #333;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.doa-details .arabic {
+  font-family: 'Amiri', serif; /* Font Arab */
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: var(--gold);
+}
+
+.doa-details .translation {
+  font-size: 14px;
+  text-align: center;
+  font-style: italic;
+}
+
+footer{
+  background:#111;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(40px);}
+  to{opacity:1;transform:none;}
+}
+</style>
+</head>
+
+<body class="lock">
+
+<!-- AUDIO -->
+<audio id="music" loop preload="auto">  <!-- ⬅️ TAMBAHAN PRELOAD -->
+  <source src="ssstik.io_1766384150193.mp3">
+</audio>
+<button class="music" onclick="toggleMusic()">♫</button>
+
+<!-- BUNGA -->
+<div class="flower-frame" style="top:-10px;left:-10px"><img src="OKE2_-removebg-preview.png"></div>
+<div class="flower-frame" style="top:-30px;left:-30px"><img src="OKE2_-removebg-preview.png"></div>
+<div class="flower-frame" style="top:-30px;right:-30px"><img src="coba13_-removebg-preview.png"></div>
+<div class="flower-frame" style="bottom:-30px;left:-30px"><img src="coba14_-removebg-preview.png"></div>
+<div class="flower-frame" style="bottom:-5px;right:-30px"><img src="OKE1_-removebg-preview.png"></div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-content">
+    <h2>The Wedding Of</h2>
+    <h1>Novi Salsabila & Rijal</h1>
+    <p>Kepada Yth<br><b id="tamu">Tamu Undangan</b></p>
+    <button onclick="openInvite()">Buka Undangan</button>
+  </div>
+</div>
+
+<!-- AYAT -->
+<section style="background:url('weeding2.jpg') center/cover">
+  <div class="container">
+    <div class="foto-lengkung">
+      <img src="weeding.jpg" alt="foto pengantin">
+      <div class="teks">
+       <i>Dan diantara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri,
+        agar kamu cenderung dan merasa tentram kepadanya, dan Dia menjadikan diantaramu rasa kasih dan sayang. Sungguh, pada yang
+        demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berfikir</i>
+        <span>Surah Ar-Ruum : 21</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- KOP SURAT -->
+<section style="background:url('weeding2.jpg') center/cover">
+  <div class="container">
+      <div class="teks">
+         <span><i>Assalamualaikum Wr.Wb</i></span>
+         Tanpa mengurangi rasa hormat,
+          kami bermaksud mengundang Bapak/Saudara/i pada acara resepsi pernikahan kami:
+        <span>NOVI SALSABILA</span>
+        <i>Putri Ke dua dari Bpk. Abdul Mutolib & Ibu Sri Rahayu</i>
+        <span>RIJAL</span>
+        <i>Putra Ke dua dari Bpk. Ajidin & Ibu Sri Rahayu</i>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- MEMPELAI -->
+<section style="background:url('weeding.jpg') center/cover">
+  <div class="title">Mempelai</div>
+  <div class="couple">
+    <div class="person">
+      <img src="weeding.jpg">
+      <h3>Novi salsabila</h3>
+      <p><i>Putri Bpk Abdul Mutolib & Ibu Ibu Sri Rahayu</i></p>
+    </div>
+    <div class="person">
+      <img src="weeding2.jpg">
+      <h3>Rijal</h3>
+      <p><i>Putra Bpk Ajidin & Ibu  Sri Rahayu</i> </p>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN (DIUBAH: TIMER AKAD NIKAH DIHAPUS, TAPI TIMER MUNDUR DITAMBAHKAN KEMBALI) -->
+<section style="background:url('weeding2.jpg') center/cover">
+  <div class="title">Menuju Hari Bahagia</div>
+  
+  <!-- Kata-kata tambahan di atas timer -->
+  <div class="event-details">
+    <p>Acara akan dilaksanakan pada:</p>
+    <p><b>Sabtu, 10 January 2026</b></p>
+    <p>Pukul 08.00 WIB s/d Selesai</p>
+    <p>Lokasi: Kp. Talagasari, Ds. Talagasari RT.003/005 Cikupa Kab. Tangerang-Banten </p>
+    <p>Kami tunggu kehadiran dan doa restunya.</p>
+  </div>
+  
+  <!-- Timer Mundur -->
+  <div class="countdown">
+    <div><span id="d">0</span><br>Hari</div>
+    <div><span id="h">0</span><br>Jam</div>
+    <div><span id="m">0</span><br>Menit</div>
+    <div><span id="s">0</span><br>Detik</div>
+  </div>
+</section>
+
+<!-- LOKASI (SLIDE BARU DENGAN PETA EMBED YANG AKURAT) -->
+<section style="background:url('weeding.jpg') center/cover">
+  <div class="title">Lokasi Acara</div>
+  <div class="location-details">
+    <!-- Embed Google Maps untuk alamat yang akurat (ganti dengan embed code asli jika perlu) -->
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521!2d106.5!3d-6.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f8b8b8b8b8b8%3A0x1234567890abcdef!2zS3AuIFRhbGFnYXNhcmksIERzLiBUYWxhZ2FzYXJpIFJULjAwMy8wMDUgQ2lrdXBhIEthYi4gVGFuZ2VyYW5nLUJhbnRlbg!5e0!3m2!1sen!2sid!4v1234567890" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- CARD ATM 1 -->
+ <section style="background:url('weeding.jpg') center/cover">
+   <h2>Informasi Transfer</h2>
+  <div class="transfer-card">
+    <div class="bank">BANK BCA</div>
+    <div class="chip"></div>
+    <div class="number" id="rek1">1234 5678 9012</div>
+    <div class="name">NOVI SALSABILA</div>
+    <button class="copy-btn" onclick="copyRek('rek1')">Salin Nomor Rekening</button>
+  </div>
+
+  <!-- CARD ATM 2 -->
+  <div class="transfer-card">
+    <div class="bank">BANK BRI</div>
+    <div class="chip"></div>
+    <div class="number" id="rek2">9876 5432 1098</div>
+    <div class="name">RIJAL</div>
+    <button class="copy-btn" onclick="copyRek('rek2')">Salin Nomor Rekening</button>
+  </div>
+<!-- DOA PENGANTIN (SLIDE BARU DENGAN TULISAN ARAB DAN LATIN) -->
+<section style="background:url('weeding2.jpg') center/cover">
+  <div class="title">Doa untuk Pengantin</div>
+  <div class="doa-details">
+    <div class="arabic">رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا</div>
+    <div class="translation">"Ya Tuhan kami, anugerahkanlah kepada kami pasangan kami dan keturunan kami sebagai penyejuk hati (kami), dan jadikanlah kami pemimpin bagi orang-orang yang bertakwa."
+      <span>(QS. Al-Furqan: 74)</span></div>
+  </div>
+</section>
+
+<footer>
+  <b>Made with</b> <i>📷instagram nrfaizz__</i>
+</footer>
+
+<script>
+const music=document.getElementById("music");
+const musicBtn=document.querySelector(".music");
+
+function openInvite(){
+  document.body.classList.remove("lock");
+  music.play();
+  musicBtn.style.display="block";
+  musicBtn.classList.add("playing");
+  setTimeout(()=>window.scrollTo({top:innerHeight,behavior:"smooth"}),500);
+}
+
+function toggleMusic(){
+  if(music.paused){music.play();musicBtn.classList.add("playing");}
+  else{music.pause();musicBtn.classList.remove("playing");}
+}
+
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+  sections.forEach(sec=>{
+    if(sec.getBoundingClientRect().top < innerHeight-120){
+      sec.classList.add("show");
+    }
+  });
+});
+
+// Timer Mundur untuk tanggal 10 January 2026 pukul 08:00
+const target=new Date("2026-01-10T08:00:00").getTime();
+setInterval(()=>{
+  const diff=target-Date.now();
+  if(diff<0)return;
+  d.innerHTML=Math.floor(diff/86400000);
+  h.innerHTML=Math.floor(diff/3600000)%24;
+  m.innerHTML=Math.floor(diff/60000)%60;
+  s.innerHTML=Math.floor(diff/1000)%60;
+},1000);
+
+const p=new URLSearchParams(location.search);
+if(p.get("to")) document.getElementById("tamu").innerText=p.get("to");
+</script>
+
+</body>
+</html>
